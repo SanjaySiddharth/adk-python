@@ -104,9 +104,8 @@ class GeminiLlmConnection(BaseLlmConnection):
       input: The input to send to the model.
     """
     if isinstance(input, types.Blob):
-      input_blob = input.model_dump()
-      logger.debug('Sending LLM Blob: %s', input_blob)
-      await self._gemini_session.send(input=input_blob)
+      logger.debug('Sending LLM Blob: %s', input)
+      await self._gemini_session.send_realtime_input(media=input)
     elif isinstance(input, types.ActivityStart):
       logger.debug('Sending LLM activity start signal')
       await self._gemini_session.send_realtime_input(activity_start=input)
